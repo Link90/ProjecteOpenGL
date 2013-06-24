@@ -1,0 +1,50 @@
+*** escena.xml~	2011-11-03 15:47:18.000000000 +0100
+--- escena.xml	2011-11-03 19:07:20.000000000 +0100
+***************
+*** 151,164 ****
+  
+  
+  		<objectref object="CASA1">
+! 			<position x="14" y="0" z="0"></position>
+  			<sizex>4</sizex>
+  			<sizey>2</sizey>
+  			<sizez>2</sizez>
+  			<orientation>0</orientation>
+  		</objectref>			
+  		<objectref object="CASA2">
+! 			<position x="30" y="0" z="0"></position>
+  			<sizex>2</sizex>
+  			<sizey>1</sizey>
+  			<sizez>2</sizez>
+--- 151,164 ----
+  
+  
+  		<objectref object="CASA1">
+! 			<position x="14" y="0" z="1"></position>
+  			<sizex>4</sizex>
+  			<sizey>2</sizey>
+  			<sizez>2</sizez>
+  			<orientation>0</orientation>
+  		</objectref>			
+  		<objectref object="CASA2">
+! 			<position x="30" y="0" z="1"></position>
+  			<sizex>2</sizex>
+  			<sizey>1</sizey>
+  			<sizez>2</sizez>
+***************
+*** 196,202 ****
+  	
+  		
+  		<objectref object="CASA3">
+! 			<position x="0" y="0" z="28"></position>
+  			<sizex>2</sizex>
+  			<sizey>3</sizey>
+  			<sizez>4</sizez>
+--- 196,202 ----
+  	
+  		
+  		<objectref object="CASA3">
+! 			<position x="2" y="0" z="28"></position>
+  			<sizex>2</sizex>
+  			<sizey>3</sizey>
+  			<sizez>4</sizez>

@@ -1,0 +1,120 @@
+*** objectInstance.cpp~	2011-10-18 21:35:55.000000000 +0200
+--- objectInstance.cpp	2011-11-04 12:10:15.000000000 +0100
+***************
+*** 15,27 ****
+  {
+    	// Cal aplicar les transformacions de model necessàries i pintar l'objecte
+  	
+! 	Model o=lmodels[this->object];
+    	Box box=o.boundingBox();
+  	
+  	//CENTRE DE LA CAIXA CONTENIDORA (BOUNDING BOX)
+  	Point centreBB;
+  	centreBB.x = (box.maxb.x+box.minb.x)/2;
+- 	centreBB.y = (box.maxb.y+box.minb.y)/2;
+  	centreBB.z = (box.maxb.z+box.minb.z)/2;
+  	
+  	//MIDA EN COORDENADES DE LA CAIXA CONTENIDORA
+--- 15,26 ----
+  {
+    	// Cal aplicar les transformacions de model necessàries i pintar l'objecte
+  	
+! 	Model &o=lmodels[object];
+    	Box box=o.boundingBox();
+  	
+  	//CENTRE DE LA CAIXA CONTENIDORA (BOUNDING BOX)
+  	Point centreBB;
+  	centreBB.x = (box.maxb.x+box.minb.x)/2;
+  	centreBB.z = (box.maxb.z+box.minb.z)/2;
+  	
+  	//MIDA EN COORDENADES DE LA CAIXA CONTENIDORA
+***************
+*** 33,75 ****
+  	cameraIDI camAux;
+  
+  	camAux.iniciTGModelat();
+! 	camAux.trasllada(this->pos.x, this->pos.y, this->pos.z);
+! 	
+! 	float sizeXaux, sizeZaux;
+! 	float midaXaux, midaZaux;
+! 	
+! 
+! 	if (((int)this->orientation)==0 || ((int)this->orientation)==180 || ((int)this->orientation)==360) {
+! 		sizeXaux=this->size.x;
+! 		sizeZaux=this->size.z;
+! 		midaXaux=midaX;
+! 		midaZaux=midaZ;	
+! 	}
+! 	else if (((int)this->orientation)==90 || ((int)this->orientation)==-90 || ((int)this->orientation)==270) {
+! 		sizeXaux=this->size.z;
+! 		sizeZaux=this->size.x;
+! 		midaXaux=midaZ;
+! 		midaZaux=midaX;
+! 	}
+! 	else cout<<"error orientation";
+! 
+! 	camAux.escala(sizeXaux/midaXaux,this->size.y/midaY,sizeZaux/midaZaux);
+! 
+! 	camAux.trasllada(midaXaux/2,midaY/2,midaZaux/2);
+! 	
+! 	camAux.rota((this->orientation),0.0,1.0,0.0);
+! 
+! 	camAux.trasllada(-centreBB.x, -centreBB.y, -centreBB.z);						
+! 
+! 	
+  	//Pintem l'objecte
+! 	lmodels[this->object].Render();	
+! 		
+  	camAux.fiTGModelat();
+  
+- 
+- 
+- 
+  	//  	_transBox.Render();  // descomentar si es vol pintar la capsa englobant
+  }
+  
+--- 32,45 ----
+  	cameraIDI camAux;
+  
+  	camAux.iniciTGModelat();
+! 	camAux.trasllada(pos.x, pos.y, pos.z);
+! 	camAux.rota(orientation, 0.0, 1.0, 0.0);
+! 	camAux.escala(size.x/midaX, size.y/midaY, size.z/midaZ);
+! 	camAux.trasllada(-centreBB.x, -box.minb.y, -centreBB.z);
+  	//Pintem l'objecte
+! 	o.Render();	
+  	camAux.fiTGModelat();
+  
+  	//  	_transBox.Render();  // descomentar si es vol pintar la capsa englobant
+  }
+  
+***************
+*** 96,102 ****
+    camAux.trasllada(pos.x, pos.y, pos.z);
+    camAux.rota(orientation, 0, 1, 0);
+    camAux.escala(size.x/sa, size.y/sb, size.z/sc);
+!   camAux.trasllada(-(b.maxb.x+b.minb.x)/2, -(b.maxb.y+b.minb.y)/2, -(b.maxb.z+b.minb.z)/2);
+  
+    vector<Vertex> &verts = obj.vertices;
+    Point punt(verts[0].coord.x, verts[0].coord.y, verts[0].coord.z);
+--- 66,72 ----
+    camAux.trasllada(pos.x, pos.y, pos.z);
+    camAux.rota(orientation, 0, 1, 0);
+    camAux.escala(size.x/sa, size.y/sb, size.z/sc);
+!   camAux.trasllada(-0.5*(b.maxb.x + b.minb.x), -b.minb.y, -0.5*(b.maxb.z + b.minb.z));
+  
+    vector<Vertex> &verts = obj.vertices;
+    Point punt(verts[0].coord.x, verts[0].coord.y, verts[0].coord.z);
+***************
+*** 110,119 ****
+      _transBox.update(punt);
+    }
+    camAux.fiTGModelat();
+- 
+-   // El centre de la caixa està en el punt desitjat. Situem el mínim de
+-   // la caixa en aquest punt
+-   _transBox.minToCenter();
+  }
+  
+  Box & ObjectInstance::getTransformedBox ()
+--- 80,85 ----
